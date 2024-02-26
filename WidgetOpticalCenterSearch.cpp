@@ -82,7 +82,7 @@ void WidgetOpticalCenterSearch::updateWidgets() {
 
 void WidgetOpticalCenterSearch::loadImage() {
     static auto dir = QString{};
-    auto filename = QFileDialog::getOpenFileName(this, tr("Открыть файл"), dir, tr("Изображения (*.bmp *jpg *png)"));
+    auto filename = QFileDialog::getOpenFileName(this, tr("Открыть файл"), dir, tr("Изображения (*.bmp *.jpg *.png)"));
     dir = QFileInfo(filename).dir().path();
     if (!filename.isEmpty()) {
         mTargetImage->loadImage(std::move(filename));
@@ -94,6 +94,7 @@ void WidgetOpticalCenterSearch::findTrackedCircle() {
     auto circles = mTargetImage->detectGridCircles(cv::Size{1, 1}, 50.0, imageROI);
     if(!circles.empty()) {
         mDetectedCircles.push_back(circles.back());
+        std::cout << __FUNCTION__ << mDetectedCircles.back() << std::endl;
     }    
     updateWidgets();
 }
